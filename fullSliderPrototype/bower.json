@@ -1,0 +1,9 @@
+{
+  "name": "fullsliderprototype",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": "latest",
+    "modernizr": "latest",
+    "foundation": "latest"
+  }
+}
