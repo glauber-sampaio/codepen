@@ -32,11 +32,54 @@ body {
 		@extend %fullHeight;
 		position: relative;
 
+		/* Main images navigation */
+		.mainImages {
+			@extend %fullSize;
+			position: relative;
+			z-index: 1;
+
+			.mi__img {
+				@extend %fullSize;
+				position: absolute;
+				top: 0; left: 0;
+				
+				/* -webkit-transform: scale(0.7);
+				transform: scale(0.7); */
+
+			}
+		}
+		
+		/* Background Images (Blur effect) */
+		.backgroundImages {
+			@extend %fullSize;
+			position: absolute;
+			top: 0; left: 0;
+			z-index: 0;
+
+			.bi__imgCont {
+				@extend %fullSize;
+				position: absolute;
+				top: 0; left: 0;
+				overflow: hidden;
+
+				.bi__imgCont-img {
+					@extend %fullSize;
+					position: relative;
+					-webkit-filter: blur(12px); 
+					filter: blur(12px);
+					filter: url(../blur.svg#blur);
+					filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='12');
+				}
+			}
+		}
+
+		/* Navigation styles */
 		.navigation {
 			@extend %fullWidth;
 			position: absolute;
 			bottom: 0; left: 0;
 			color: white;
+			z-index: 2;
 
 			ul {
 				@extend %widthAuto;
@@ -48,33 +91,66 @@ body {
 					margin-right: 30px;
 					overflow: hidden;
 					cursor: pointer;
+					position: relative;
 
 					* { @extend %expo; }
 					&:last-child { margin-right: 0; }
 					&:hover {
-						h4 { color: darken(white, 40%); }
+						.li__info { opacity: 0.9; }
+					}
+					&.active {
+						.li__hoverLine {
+							.l { width: 100%; }
+						}
 					}
 
-					h5 {
-						@include font(12, white, 0, normal, 300);
-						float: left;
-						transform: rotate(-90deg);
-						-webkit-transform: rotate(-90deg);
-						padding: 4px 0px 5px 0px;
+					a {
+						@extend %fullSize;
+						position: absolute;
+						top: 0; left: 0;
+						z-index: 1;
 					}
-					h4 {
-						@include font(18, white, 0, normal, 400);
-						float: left;
-						padding-left: 6px;
+
+					.li__info,
+					.li__info-mask .mask__infoContainer {
+						@extend %fullWidth;
+						overflow: hidden;
+						opacity: 0.7;
+
+						h5 {
+							@include font(12, white, 0, normal, 300);
+							float: left;
+							transform: rotate(-90deg);
+							-webkit-transform: rotate(-90deg);
+							padding: 4px 0px 5px 0px;
+						}
+						h4 {
+							@include font(18, white, 0, normal, 400);
+							float: left;
+							padding-left: 6px;
+							text-transform: uppercase;
+						}
 					}
-					.hover-line {
+
+					.li__info-mask {
+						width: 0%;
+						position: absolute;
+						top: 0; left: 0;
+						opacity: 1;
+						overflow: hidden;
+
+						.mask__infoContainer { opacity: 1; }
+
+					}
+
+					.li__hoverLine {
 						@extend %fullWidth;
 						height: 1px;
 						float: left;
 						margin-top: 8px;
 
 						.l {
-							@extend %fullSize;
+							width: 0%;
 							background: darken(white, 20%);
 							margin: 0 auto;
 						}

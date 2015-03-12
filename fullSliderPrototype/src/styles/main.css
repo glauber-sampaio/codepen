@@ -4321,7 +4321,9 @@ th.hide-for-touch {
 
 #content #slider,
 #content #slider .navigation,
-#content #slider .navigation ul li .hover-line {
+#content #slider .navigation ul li .li__info,
+#content #slider .navigation ul li .li__info-mask .mask__infoContainer,
+#content #slider .navigation ul li .li__hoverLine {
   width: 100%;
 }
 
@@ -4340,7 +4342,12 @@ th.hide-for-touch {
 /* line 87, ../sass/base/_mymixins.scss */
 
 #content,
-#content #slider .navigation ul li .hover-line .l {
+#content #slider .mainImages,
+#content #slider .mainImages .mi__img,
+#content #slider .backgroundImages,
+#content #slider .backgroundImages .bi__imgCont,
+#content #slider .backgroundImages .bi__imgCont .bi__imgCont-img,
+#content #slider .navigation ul li a {
   width: 100%;
   height: 100%;
 }
@@ -4440,47 +4447,121 @@ body {
 
 #content #slider {
   position: relative;
+  /* Main images navigation */
+  /* Background Images (Blur effect) */
+  /* Navigation styles */
 }
 
-/* line 35, ../sass/modules/_global.scss */
+/* line 36, ../sass/modules/_global.scss */
+
+#content #slider .mainImages {
+  position: relative;
+  z-index: 1;
+}
+
+/* line 41, ../sass/modules/_global.scss */
+
+#content #slider .mainImages .mi__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* -webkit-transform: scale(0.7);
+  transform: scale(0.7); */
+}
+
+/* line 53, ../sass/modules/_global.scss */
+
+#content #slider .backgroundImages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* line 59, ../sass/modules/_global.scss */
+
+#content #slider .backgroundImages .bi__imgCont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+/* line 65, ../sass/modules/_global.scss */
+
+#content #slider .backgroundImages .bi__imgCont .bi__imgCont-img {
+  position: relative;
+  -webkit-filter: blur(12px);
+  filter: blur(12px);
+  filter: url(../blur.svg#blur);
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='12');
+}
+
+/* line 77, ../sass/modules/_global.scss */
 
 #content #slider .navigation {
   position: absolute;
   bottom: 0;
   left: 0;
   color: white;
+  z-index: 2;
 }
 
-/* line 41, ../sass/modules/_global.scss */
+/* line 84, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul {
   margin: 90px auto;
 }
 
-/* line 45, ../sass/modules/_global.scss */
+/* line 88, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li {
   float: left;
   margin-right: 30px;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
 }
 
-/* line 53, ../sass/modules/_global.scss */
+/* line 97, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:last-child {
   margin-right: 0;
 }
 
-/* line 55, ../sass/modules/_global.scss */
+/* line 99, ../sass/modules/_global.scss */
 
-#content #slider .navigation ul li:hover h4 {
-  color: #999999;
+#content #slider .navigation ul li:hover .li__info {
+  opacity: 0.9;
 }
 
-/* line 58, ../sass/modules/_global.scss */
+/* line 103, ../sass/modules/_global.scss */
 
-#content #slider .navigation ul li h5 {
+#content #slider .navigation ul li.active .li__hoverLine .l {
+  width: 100%;
+}
+
+/* line 107, ../sass/modules/_global.scss */
+
+#content #slider .navigation ul li a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* line 114, ../sass/modules/_global.scss */
+
+#content #slider .navigation ul li .li__info,
+#content #slider .navigation ul li .li__info-mask .mask__infoContainer {
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+/* line 120, ../sass/modules/_global.scss */
+
+#content #slider .navigation ul li .li__info h5,
+#content #slider .navigation ul li .li__info-mask .mask__infoContainer h5 {
   font-size: 12px;
   font-style: normal;
   font-weight: 300;
@@ -4493,9 +4574,10 @@ body {
   padding: 4px 0px 5px 0px;
 }
 
-/* line 65, ../sass/modules/_global.scss */
+/* line 127, ../sass/modules/_global.scss */
 
-#content #slider .navigation ul li h4 {
+#content #slider .navigation ul li .li__info h4,
+#content #slider .navigation ul li .li__info-mask .mask__infoContainer h4 {
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -4503,19 +4585,38 @@ body {
   color: white;
   float: left;
   padding-left: 6px;
+  text-transform: uppercase;
 }
 
-/* line 70, ../sass/modules/_global.scss */
+/* line 135, ../sass/modules/_global.scss */
 
-#content #slider .navigation ul li .hover-line {
+#content #slider .navigation ul li .li__info-mask {
+  width: 0%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  overflow: hidden;
+}
+
+/* line 142, ../sass/modules/_global.scss */
+
+#content #slider .navigation ul li .li__info-mask .mask__infoContainer {
+  opacity: 1;
+}
+
+/* line 146, ../sass/modules/_global.scss */
+
+#content #slider .navigation ul li .li__hoverLine {
   height: 1px;
   float: left;
   margin-top: 8px;
 }
 
-/* line 76, ../sass/modules/_global.scss */
+/* line 152, ../sass/modules/_global.scss */
 
-#content #slider .navigation ul li .hover-line .l {
+#content #slider .navigation ul li .li__hoverLine .l {
+  width: 0%;
   background: #cccccc;
   margin: 0 auto;
 }

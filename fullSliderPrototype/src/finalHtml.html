@@ -1,0 +1,102 @@
+<!-- Demo based on www.hellothierry.com -->
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Full Slider Prototype</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="styles/main.css">
+
+        <!-- build:js js/vendor/modernizr.js -->
+        <script src="components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+
+    </head>
+    <body>
+        <!--[if lt IE 9]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="content">
+            
+            <div id="slider">
+
+                <!--
+                    
+                    Ideia de uso final:
+
+                    <img src="images/image1.jpg" alt="This is just" data-url="#">
+                    <img src="images/image2.jpg" alt="a demo of" data-url="#">
+                    <img src="images/image3.jpg" alt="a full slider" data-url="#">
+                    <img src="images/image4.jpg" alt="and it's really beautiful" data-url="#">
+
+                -->
+
+                <div class="mainImages">
+                    <div class="mi__img" style="background: url(images/image1.jpg) no-repeat center center; background-size: cover;"></div>
+                </div>
+
+                <div class="backgroundImages">
+                    <div class="bi__imgCont">
+                        <div class="bi__imgCont-img" style="background: url(images/image1.jpg) no-repeat center top; background-size: cover;"></div>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <ul>
+                        <li>
+                            <div class="li__info">
+                                <h5>01</h5><h4>THIS IS JUST</h4>
+                            </div>
+                            <!-- <div class="li__info-mask">
+                                <div class="mask__infoContainer">
+                                    <h5>01</h5><h4>THIS IS JUST</h4>
+                                </div>
+                            </div> -->
+                            <!-- <div class="li__hoverLine"><div class="l"></div></div> -->
+                        </li>
+                        <li>
+                            <div class="li__info">
+                                <h5>02</h5><h4>A DEMO OF</h4>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="li__info">
+                                <h5>03</h5><h4>A FULL SLIDER</h4>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="li__info">
+                                <h5>04</h5><h4>AND IT'S REALLY BEAUTIFUL</h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+
+        <!-- build:js js/main.min.js -->
+        <script src="js/plugins/classie.js"></script>
+        <script src="js/plugins/CSSPlugin.min.js"></script>
+        <script src="js/plugins/TweenLite.min.js"></script>
+        <script src="js/main.js"></script>
+
+        <script>
+
+            var s = new TSlider;
+
+        </script>
+
+        <!-- endbuild -->
+
+    </body>
+</html>
