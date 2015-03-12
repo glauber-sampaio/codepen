@@ -11,8 +11,8 @@
 
 	// from http://stackoverflow.com/a/6466243/2011404
 	function pad (str, max) {
-	  str = str.toString();
-	  return str.length < max ? pad("0" + str, max) : str;
+	  	str = str.toString();
+	  	return str.length < max ? pad("0" + str, max) : str;
 	}
 
 	TweenMax.defaultEase = Expo.easeOut;
@@ -39,7 +39,7 @@
 			// Images total count
 			this.imagesCount = Array.prototype.slice.call(this.Slider.querySelectorAll('img')).length;
 			// Slideshow interval
-			this.sldInterval = 5000;
+			this.sldInterval = 6000;
 			// Control if it's animating
 			this.isAnimating = false;
 			// Current slide
@@ -47,11 +47,11 @@
 			// TweenMax default ease
 
 			/* Generate images wrapper */
-			this._layout();
+			this._createSlider();
 
 		},
 
-		_layout: function () {
+		_createSlider: function () {
 
 			var self = this;
 
@@ -130,6 +130,7 @@
 			_miImgEl.style.backgroundSize = 'cover';
 			_miImgEl.style.zIndex = (this.imagesCount - (obj.index + 1));
 			_biContImgEl.innerHTML = '<div class="bi__imgCont-img bi-'+ (obj.index + 1) +'" />';
+			_biContImgEl.style.zIndex = (this.imagesCount - (obj.index + 1));
 
 			this.mainImages.appendChild(_miImgEl);
 			this.backgroundImages.appendChild(_biContImgEl);
@@ -164,6 +165,18 @@
 			var self = this;
 
 			TweenMax.set(this.navigation, { opacity: 0, y: 25 });
+			
+			this.backgroundImages.style.display = "none";
+			this.bgSld.forEach(function (el, i) {
+				
+				var _img = el.querySelector('.bi__imgCont-img');
+				TweenMax.set(_img, { scale: 2, y: 50 });
+
+				if(i != 0) {
+					//TweenMax.set(el, { height: '0%', top: 'inherit', bottom: 0 });
+				}
+
+			});
 
 			this.sld.forEach(function (el, i) {
 				if(i === 0) {
@@ -171,10 +184,6 @@
 				}else{
 					TweenMax.set(el, { scale: 0.6, y: -window.innerHeight });
 				}
-			});
-
-			this.bgSld.forEach(function (el, i) {
-				TweenMax.set(el, { opacity: 0 });
 			});
 
 			setTimeout(function () {
@@ -185,9 +194,16 @@
 				classie.addClass(self.sld[self.current], 'active-slide');
 				classie.addClass(self.navItens[self.current], 'active');
 
+				/* After all elements positioned, start slideshow. */
 				self._startSlider();
 
 			}, 1200);
+
+			setTimeout(function () {
+
+				self.backgroundImages.style.display = "block";
+
+			}, 2500);
 
 		},
 
@@ -201,6 +217,7 @@
 
 			var self = this;
 			var currSlide = this.sld[this.current];
+			var currBGSlide = this.bgSld[this.current];
 
 
 			if( pos !== undefined ) {
@@ -218,25 +235,47 @@
 			}
 
 			/* Reset last slide */
-			this._resetLastSlide(currSlide);
+			this._resetLastSlide(currSlide, currBGSlide);
 
 			/* Animate current slide */
 			var nextSlide = this.sld[this.current];
-			this._animateNextSlide(nextSlide);
+			var nextBGSlide = this.bgSld[this.current];
+
+			this._animateNextSlide(nextSlide, nextBGSlide);
 
 		},
 
-		_resetLastSlide: function (element) {
+		_resetLastSlide: function (currSld, currBGSld) {
 
-			classie.removeClass(element, 'active-slide');
+			classie.removeClass(currSld, 'active-slide');
 			this.isAnimating = false;
 
+			/* 'mi__img' element – front image */
+			TweenMax.to(currSld, 1.5, { scale: 0.6, ease: Expo.easeOut });
+			TweenMax.to(currSld, 0.8, { y: window.innerHeight, ease: Expo.easeOut, delay: 0.6, 
+				onComplete: function () {
+					TweenMax.set(currSld, { scale: 0.6, y: -window.innerHeight });
+				}
+			});
+
+			/* 'bi__imgCont' element – background image */
+			TweenMax.to(currBGSld.querySelector('.bi__imgCont-img'), 2, { scale: 1.7, ease: Expo.easeOut });
+			TweenMax.to(currBGSld, 1.2, { height: '0%', ease: Expo.easeOut, delay: 0.5 });
+
+
 		},
 
-		_animateNextSlide: function (element) {
+		_animateNextSlide: function (nxtSld, nxtBGSld) {
 
 			var self = this;
-			classie.addClass(element, 'active-slide');
+			classie.addClass(nxtSld, 'active-slide');
+
+			/* 'mi__img' element – front image */
+			TweenMax.to(nxtSld, 0.6, { y: 0, ease: Expo.easeOut, delay: 0.8 });
+			TweenMax.to(nxtSld, 1.5, { scale: 1, ease: Expo.easeOut, delay: 1.2 });
+
+			/* 'bi__imgCont' element – background image */
+			//TweenMax.to(nxtBGSld.querySelector('.bi__imgCont-img'), 2, { });
 
 		},
 
