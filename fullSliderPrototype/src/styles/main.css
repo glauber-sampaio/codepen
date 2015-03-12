@@ -4441,9 +4441,32 @@ body {
 
 #content {
   position: relative;
+  overflow: hidden;
 }
 
-/* line 30, ../sass/modules/_global.scss */
+/* line 31, ../sass/modules/_global.scss */
+
+#content .c {
+  font-size: 10px;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 0px;
+  color: white;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 99999;
+  text-align: center;
+}
+
+/* line 37, ../sass/modules/_global.scss */
+
+#content .c a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* line 40, ../sass/modules/_global.scss */
 
 #content #slider {
   position: relative;
@@ -4452,14 +4475,14 @@ body {
   /* Navigation styles */
 }
 
-/* line 36, ../sass/modules/_global.scss */
+/* line 46, ../sass/modules/_global.scss */
 
 #content #slider .mainImages {
   position: relative;
   z-index: 1;
 }
 
-/* line 41, ../sass/modules/_global.scss */
+/* line 51, ../sass/modules/_global.scss */
 
 #content #slider .mainImages .mi__img {
   position: absolute;
@@ -4469,7 +4492,7 @@ body {
   transform: scale(0.7); */
 }
 
-/* line 53, ../sass/modules/_global.scss */
+/* line 63, ../sass/modules/_global.scss */
 
 #content #slider .backgroundImages {
   position: absolute;
@@ -4478,7 +4501,7 @@ body {
   z-index: 0;
 }
 
-/* line 59, ../sass/modules/_global.scss */
+/* line 69, ../sass/modules/_global.scss */
 
 #content #slider .backgroundImages .bi__imgCont {
   position: absolute;
@@ -4487,7 +4510,7 @@ body {
   overflow: hidden;
 }
 
-/* line 65, ../sass/modules/_global.scss */
+/* line 75, ../sass/modules/_global.scss */
 
 #content #slider .backgroundImages .bi__imgCont .bi__imgCont-img {
   position: relative;
@@ -4497,7 +4520,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='12');
 }
 
-/* line 77, ../sass/modules/_global.scss */
+/* line 87, ../sass/modules/_global.scss */
 
 #content #slider .navigation {
   position: absolute;
@@ -4507,13 +4530,13 @@ body {
   z-index: 2;
 }
 
-/* line 84, ../sass/modules/_global.scss */
+/* line 94, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul {
   margin: 90px auto;
 }
 
-/* line 88, ../sass/modules/_global.scss */
+/* line 98, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li {
   float: left;
@@ -4523,25 +4546,25 @@ body {
   position: relative;
 }
 
-/* line 97, ../sass/modules/_global.scss */
+/* line 107, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:last-child {
   margin-right: 0;
 }
 
-/* line 99, ../sass/modules/_global.scss */
+/* line 109, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:hover .li__info {
   opacity: 0.9;
 }
 
-/* line 103, ../sass/modules/_global.scss */
+/* line 113, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li.active .li__hoverLine .l {
   width: 100%;
 }
 
-/* line 107, ../sass/modules/_global.scss */
+/* line 117, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li a {
   position: absolute;
@@ -4550,7 +4573,7 @@ body {
   z-index: 1;
 }
 
-/* line 114, ../sass/modules/_global.scss */
+/* line 124, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer {
@@ -4558,7 +4581,7 @@ body {
   opacity: 0.7;
 }
 
-/* line 120, ../sass/modules/_global.scss */
+/* line 130, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info h5,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer h5 {
@@ -4574,7 +4597,7 @@ body {
   padding: 4px 0px 5px 0px;
 }
 
-/* line 127, ../sass/modules/_global.scss */
+/* line 137, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info h4,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer h4 {
@@ -4588,7 +4611,7 @@ body {
   text-transform: uppercase;
 }
 
-/* line 135, ../sass/modules/_global.scss */
+/* line 145, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info-mask {
   width: 0%;
@@ -4599,13 +4622,13 @@ body {
   overflow: hidden;
 }
 
-/* line 142, ../sass/modules/_global.scss */
+/* line 152, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer {
   opacity: 1;
 }
 
-/* line 146, ../sass/modules/_global.scss */
+/* line 156, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__hoverLine {
   height: 1px;
@@ -4613,12 +4636,15 @@ body {
   margin-top: 8px;
 }
 
-/* line 152, ../sass/modules/_global.scss */
+/* line 162, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__hoverLine .l {
   width: 0%;
+  height: 1px;
   background: #cccccc;
   margin: 0 auto;
+  transition-delay: 1s;
+  -webkit-transition-delay: 1s;
 }
 
 /*# sourceMappingURL=main.css.map */

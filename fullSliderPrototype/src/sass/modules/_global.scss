@@ -26,6 +26,16 @@ body {
 	@extend %fullSize;
 	@extend %viewportHeight;
 	position: relative;
+	overflow: hidden;
+
+	.c {
+		@include font(10, white, 0, normal, normal);
+		position: absolute;
+		bottom: 15px; right: 15px;
+		z-index: 99999;
+		text-align: center;
+		a { color: white; text-decoration: underline; }
+	}
 	
 	#slider {
 		@extend %fullWidth;
@@ -151,8 +161,11 @@ body {
 
 						.l {
 							width: 0%;
+							height: 1px;
 							background: darken(white, 20%);
 							margin: 0 auto;
+							transition-delay: 1s;
+							-webkit-transition-delay: 1s;
 						}
 
 					}
