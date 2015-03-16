@@ -2,6 +2,31 @@
 
 	'use strict';
 
+	var lastTime = 0;
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    	window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+    	window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+        	                       || window[vendors[x]+'CancelRequestAnimationFrame'];
+	}
+ 
+	if (!window.requestAnimationFrame)
+		window.requestAnimationFrame = function(callback, element) {
+		var currTime = new Date().getTime();
+		var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+		var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+
+		lastTime = currTime + timeToCall;
+		return id;
+
+    };
+ 
+	if (!window.cancelAnimationFrame)
+		window.cancelAnimationFrame = function(id) {
+		clearTimeout(id);
+    };
+
 	// from http://stackoverflow.com/a/11381730/989439
 	function mobilecheck() {
 		var check = false;
@@ -44,7 +69,8 @@
 			this.isAnimating = false;
 			// Current slide
 			this.current = 0;
-			// TweenMax default ease
+			// Minimum scale
+			this.minScale = 0.7;
 
 			/* Generate images wrapper */
 			this._createSlider();
@@ -125,7 +151,6 @@
 			classie.addClass(_miImgEl, 'mi__img');
 			classie.addClass(_biContImgEl, 'bi__imgCont');
 
-
 			_miImgEl.style.background = 'url('+ obj.src +') no-repeat center center';
 			_miImgEl.style.backgroundSize = 'cover';
 			_miImgEl.style.zIndex = (this.imagesCount - (obj.index + 1));
@@ -167,23 +192,24 @@
 			TweenMax.set(this.navigation, { opacity: 0, y: 25 });
 			
 			this.backgroundImages.style.display = "none";
-			this.bgSld.forEach(function (el, i) {
+			/*this.bgSld.forEach(function (el, i) {
 				
 				var _img = el.querySelector('.bi__imgCont-img');
-				TweenMax.set(_img, { scale: 2, y: 50 });
+				TweenMax.set(_img, { scale: 1.8, y: 50 });
 
 				if(i != 0) {
 					//TweenMax.set(el, { height: '0%', top: 'inherit', bottom: 0 });
 				}
 
-			});
+			});*/
 
 			this.sld.forEach(function (el, i) {
-				if(i === 0) {
-					TweenMax.set(el, { scale: 1.3, opacity: 0 });
-				}else{
-					TweenMax.set(el, { scale: 0.6, y: -window.innerHeight });
-				}
+
+				classie.addClass(el, 'sld-' + i);
+
+				if(i === 0) { TweenMax.set(el, { scale: 1.3, opacity: 0 }); }
+				else { TweenMax.set(el, { scale: self.minScale, y: -window.innerHeight }); }
+
 			});
 
 			setTimeout(function () {
@@ -201,7 +227,7 @@
 
 			setTimeout(function () {
 
-				self.backgroundImages.style.display = "block";
+				//self.backgroundImages.style.display = "block";
 
 			}, 2500);
 
@@ -250,32 +276,62 @@
 			classie.removeClass(currSld, 'active-slide');
 			this.isAnimating = false;
 
-			/* 'mi__img' element – front image */
-			TweenMax.to(currSld, 1.5, { scale: 0.6, ease: Expo.easeOut });
-			TweenMax.to(currSld, 0.8, { y: window.innerHeight, ease: Expo.easeOut, delay: 0.6, 
-				onComplete: function () {
-					TweenMax.set(currSld, { scale: 0.6, y: -window.innerHeight });
-				}
-			});
+			function n () {
 
-			/* 'bi__imgCont' element – background image */
-			TweenMax.to(currBGSld.querySelector('.bi__imgCont-img'), 2, { scale: 1.7, ease: Expo.easeOut });
-			TweenMax.to(currBGSld, 1.2, { height: '0%', ease: Expo.easeOut, delay: 0.5 });
+				/* 'mi__img' element – front image */
+				TweenMax.to(currSld, 1.5, { scale: 0.8, ease: Expo.easeOut });
+				TweenMax.to(currSld, 0.8, { y: window.innerHeight, ease: Expo.easeOut, delay: 1.4, 
+					onComplete: function () {
+						TweenMax.set(currSld, { scale: self.minScale, y: -window.innerHeight });
+					}
+				});
 
+				/* 'bi__imgCont' element – background image */
+				//TweenMax.to(currBGSld.querySelector('.bi__imgCont-img'), 2, { scale: 1.8, ease: Expo.easeOut });
+				//TweenMax.to(currBGSld, 1.2, { height: '0%', ease: Expo.easeOut, delay: 0.5 });
+				
+			}
+
+			requestAnimationFrame(n, currSld);
 
 		},
 
 		_animateNextSlide: function (nxtSld, nxtBGSld) {
 
 			var self = this;
+			var idx = nxtSld.classList[1].split('sld-')[1];
+
 			classie.addClass(nxtSld, 'active-slide');
 
-			/* 'mi__img' element – front image */
-			TweenMax.to(nxtSld, 0.6, { y: 0, ease: Expo.easeOut, delay: 0.8 });
-			TweenMax.to(nxtSld, 1.5, { scale: 1, ease: Expo.easeOut, delay: 1.2 });
+			function n () {
 
-			/* 'bi__imgCont' element – background image */
-			//TweenMax.to(nxtBGSld.querySelector('.bi__imgCont-img'), 2, { });
+				/* 'mi__img' element – front image */
+				TweenMax.to(nxtSld, 0.8, { y: 0, ease: Expo.easeOut, delay: 1.6 });
+				TweenMax.to(nxtSld, 1.5, { scale: 1, ease: Expo.easeOut, delay: 2 });
+
+				/* 'bi__imgCont' element – background image */
+				//TweenMax.to(nxtBGSld.querySelector('.bi__imgCont-img'), 2, { y: 0, ease: Expo.easeOut, delay: 0.8 });
+				//TweenMax.to(nxtBGSld.querySelector('.bi__imgCont-img'), 2, { scale: 2, ease: Expo.easeOut, delay: 1 });
+
+				/* 'navigation' li */
+				self._animateNavigation(idx);				
+
+			}
+
+			requestAnimationFrame(n, nxtSld);
+
+		},
+
+		_animateNavigation: function (idx) {
+
+			var self = this;
+			var el = this.navItens[idx];
+			var mask = el.querySelector('.li__info-mask');
+
+			classie.removeClass(this.navigation.querySelector('li.active'), 'active');
+			classie.addClass(el, 'active');
+
+			TweenMax.to(mask, 5, { width: '100%' });
 
 		},
 

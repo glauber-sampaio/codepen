@@ -103,7 +103,6 @@ body {
 					cursor: pointer;
 					position: relative;
 
-					* { @extend %expo; }
 					&:last-child { margin-right: 0; }
 					&:hover {
 						.li__info { opacity: 0.9; }
@@ -119,6 +118,7 @@ body {
 						position: absolute;
 						top: 0; left: 0;
 						z-index: 1;
+						@extend %expo;
 					}
 
 					.li__info,

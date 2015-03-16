@@ -4363,7 +4363,7 @@ th.hide-for-touch {
 /* line 107, ../sass/base/_mymixins.scss */
 
 a,
-#content #slider .navigation ul li * {
+#content #slider .navigation ul li a {
   -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   -ms-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -4546,25 +4546,25 @@ body {
   position: relative;
 }
 
-/* line 107, ../sass/modules/_global.scss */
+/* line 106, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:last-child {
   margin-right: 0;
 }
 
-/* line 109, ../sass/modules/_global.scss */
+/* line 108, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:hover .li__info {
   opacity: 0.9;
 }
 
-/* line 113, ../sass/modules/_global.scss */
+/* line 112, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li.active .li__hoverLine .l {
   width: 100%;
 }
 
-/* line 117, ../sass/modules/_global.scss */
+/* line 116, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li a {
   position: absolute;
