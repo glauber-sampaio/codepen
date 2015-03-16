@@ -105,7 +105,7 @@ body {
 
 					&:last-child { margin-right: 0; }
 					&:hover {
-						.li__info { opacity: 0.9; }
+						.li__info { opacity: 0.9 !important; }
 					}
 					&.active {
 						.li__hoverLine {
@@ -126,6 +126,7 @@ body {
 						@extend %fullWidth;
 						overflow: hidden;
 						opacity: 0.7;
+						@extend %expo;
 
 						h5 {
 							@include font(12, white, 0, normal, 300);
@@ -164,8 +165,6 @@ body {
 							height: 1px;
 							background: darken(white, 20%);
 							margin: 0 auto;
-							transition-delay: 1s;
-							-webkit-transition-delay: 1s;
 							transition-duration: 1s;
 							-webkit-transition-duration: 1s;
 						}

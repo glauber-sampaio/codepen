@@ -40,6 +40,15 @@
 	  	return str.length < max ? pad("0" + str, max) : str;
 	}
 
+	function css(element, property) {
+		var _property = window.getComputedStyle(element, null).getPropertyValue(property);
+		
+		if(_property.indexOf('px') != -1)
+			return parseInt(_property);
+		else
+			return _property;
+	}
+
 	TweenMax.defaultEase = Expo.easeOut;
 
 	function TSlider () {
@@ -174,14 +183,22 @@
 			var _li = document.createElement('li');
 			var number = pad((obj.index+1), 2);
 			var info = '<h5>'+number+'</h5><h4>'+obj.alt+'</h4>'; 
+			var a, liInfo, mask;
 			
 			classie.addClass(_li, 'navItem-' + (obj.index + 1));
 			_li.innerHTML = '<a href=""></a><div class="li__info"></div><div class="li__info-mask"><div class="mask__infoContainer"></div></div><div class="li__hoverLine"><div class="l"></div></div>';
 
 			ul.appendChild(_li);
-			ul.querySelector('.navItem-' + (obj.index + 1) + ' a').setAttribute('href', obj.url);
-			ul.querySelector('.navItem-' + (obj.index + 1) + ' .li__info').innerHTML = info;
-			ul.querySelector('.navItem-' + (obj.index + 1) + ' .mask__infoContainer').innerHTML = info;
+
+			a = ul.querySelector('.navItem-' + (obj.index + 1) + ' a');
+			liInfo = ul.querySelector('.navItem-' + (obj.index + 1) + ' .li__info');
+			mask = ul.querySelector('.navItem-' + (obj.index + 1) + ' .mask__infoContainer');
+
+			a.setAttribute('href', obj.url);
+			liInfo.innerHTML = info;
+
+			mask.innerHTML = info;
+			mask.style.width = css(_li, 'width') + "px";
 
 		},
 
@@ -219,6 +236,7 @@
 
 				classie.addClass(self.sld[self.current], 'active-slide');
 				classie.addClass(self.navItens[self.current], 'active');
+				self._animateNavigation(0);
 
 				/* After all elements positioned, start slideshow. */
 				self._startSlider();
@@ -278,15 +296,15 @@
 
 			function n () {
 
-				/* 'mi__img' element – front image */
+				/* front image */
 				TweenMax.to(currSld, 1.5, { scale: 0.8, ease: Expo.easeOut });
-				TweenMax.to(currSld, 0.8, { y: window.innerHeight, ease: Expo.easeOut, delay: 1.4, 
+				TweenMax.to(currSld, 0.8, { y: window.innerHeight, ease: Expo.easeOut, delay: 0.8, 
 					onComplete: function () {
 						TweenMax.set(currSld, { scale: self.minScale, y: -window.innerHeight });
 					}
 				});
 
-				/* 'bi__imgCont' element – background image */
+				/* background image */
 				//TweenMax.to(currBGSld.querySelector('.bi__imgCont-img'), 2, { scale: 1.8, ease: Expo.easeOut });
 				//TweenMax.to(currBGSld, 1.2, { height: '0%', ease: Expo.easeOut, delay: 0.5 });
 				
@@ -305,16 +323,15 @@
 
 			function n () {
 
-				/* 'mi__img' element – front image */
+				/* front image */
 				TweenMax.to(nxtSld, 0.8, { y: 0, ease: Expo.easeOut, delay: 1.6 });
-				TweenMax.to(nxtSld, 1.5, { scale: 1, ease: Expo.easeOut, delay: 2 });
+				TweenMax.to(nxtSld, 1.5, { scale: 1, ease: Expo.easeOut, delay: 2, onComplete: function () {
+					self._animateNavigation(idx);
+				}});
 
-				/* 'bi__imgCont' element – background image */
+				/* background image */
 				//TweenMax.to(nxtBGSld.querySelector('.bi__imgCont-img'), 2, { y: 0, ease: Expo.easeOut, delay: 0.8 });
 				//TweenMax.to(nxtBGSld.querySelector('.bi__imgCont-img'), 2, { scale: 2, ease: Expo.easeOut, delay: 1 });
-
-				/* 'navigation' li */
-				self._animateNavigation(idx);				
 
 			}
 
@@ -325,13 +342,25 @@
 		_animateNavigation: function (idx) {
 
 			var self = this;
+			var currActiveItem = this.navigation.querySelector('li.active');
 			var el = this.navItens[idx];
-			var mask = el.querySelector('.li__info-mask');
 
-			classie.removeClass(this.navigation.querySelector('li.active'), 'active');
+			// reseting styles of current item
+			classie.removeClass(currActiveItem, 'active');
+			currActiveItem.querySelector('.li__info').style.opacity = 0.7;
+			TweenMax.to(currActiveItem.querySelector('.li__info-mask'), 0.5, { opacity: 0, onComplete: function () {
+				currActiveItem.querySelector('.li__info-mask').style.width = "0%";
+			}})
+			
+
+			// animating the "next" item
+			el.querySelector('.li__info').style.opacity = 0.3;
+			el.querySelector('.li__info-mask').style.opacity = 1;
+			TweenMax.to(el.querySelector('.li__info-mask'), (this.sldInterval/1000), { 
+				width: '100%', ease: Linear.easeNone
+			});
+			
 			classie.addClass(el, 'active');
-
-			TweenMax.to(mask, 5, { width: '100%' });
 
 		},
 

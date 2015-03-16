@@ -4363,7 +4363,9 @@ th.hide-for-touch {
 /* line 107, ../sass/base/_mymixins.scss */
 
 a,
-#content #slider .navigation ul li a {
+#content #slider .navigation ul li a,
+#content #slider .navigation ul li .li__info,
+#content #slider .navigation ul li .li__info-mask .mask__infoContainer {
   -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   -ms-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -4555,7 +4557,7 @@ body {
 /* line 108, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:hover .li__info {
-  opacity: 0.9;
+  opacity: 0.9 !important;
 }
 
 /* line 112, ../sass/modules/_global.scss */
@@ -4581,7 +4583,7 @@ body {
   opacity: 0.7;
 }
 
-/* line 130, ../sass/modules/_global.scss */
+/* line 131, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info h5,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer h5 {
@@ -4597,7 +4599,7 @@ body {
   padding: 4px 0px 5px 0px;
 }
 
-/* line 137, ../sass/modules/_global.scss */
+/* line 138, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info h4,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer h4 {
@@ -4611,7 +4613,7 @@ body {
   text-transform: uppercase;
 }
 
-/* line 145, ../sass/modules/_global.scss */
+/* line 146, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info-mask {
   width: 0%;
@@ -4622,13 +4624,13 @@ body {
   overflow: hidden;
 }
 
-/* line 152, ../sass/modules/_global.scss */
+/* line 153, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer {
   opacity: 1;
 }
 
-/* line 156, ../sass/modules/_global.scss */
+/* line 157, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__hoverLine {
   height: 1px;
@@ -4636,15 +4638,13 @@ body {
   margin-top: 8px;
 }
 
-/* line 162, ../sass/modules/_global.scss */
+/* line 163, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__hoverLine .l {
   width: 0%;
   height: 1px;
   background: #cccccc;
   margin: 0 auto;
-  transition-delay: 1s;
-  -webkit-transition-delay: 1s;
   transition-duration: 1s;
   -webkit-transition-duration: 1s;
 }
