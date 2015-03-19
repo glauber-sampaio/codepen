@@ -56,17 +56,17 @@ module.exports = function (grunt) {
 		        "mq" : false,
 		        "cssclasses" : true
 			    },
-	    "extensibility" : {
-        "addtest" : false,
-        "prefixed" : false,
-        "teststyles" : false,
-        "testprops" : false,
-        "testallprops" : false,
-        "hasevents" : false,
-        "prefixes" : false,
-        "domprefixes" : false
-      },
-      "uglify" : true
+		    "extensibility" : {
+		        "addtest" : false,
+		        "prefixed" : false,
+		        "teststyles" : false,
+		        "testprops" : false,
+		        "testallprops" : false,
+		        "hasevents" : false,
+		        "prefixes" : false,
+		        "domprefixes" : false
+	      	},
+      		"uglify" : true
 		},
 
 		uglify: {
