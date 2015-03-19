@@ -4477,14 +4477,20 @@ body {
   /* Navigation styles */
 }
 
-/* line 46, ../sass/modules/_global.scss */
+/* line 45, ../sass/modules/_global.scss */
+
+#content #slider img {
+  display: none;
+}
+
+/* line 48, ../sass/modules/_global.scss */
 
 #content #slider .mainImages {
   position: relative;
   z-index: 1;
 }
 
-/* line 51, ../sass/modules/_global.scss */
+/* line 53, ../sass/modules/_global.scss */
 
 #content #slider .mainImages .mi__img {
   position: absolute;
@@ -4494,7 +4500,7 @@ body {
   transform: scale(0.7); */
 }
 
-/* line 63, ../sass/modules/_global.scss */
+/* line 65, ../sass/modules/_global.scss */
 
 #content #slider .backgroundImages {
   position: absolute;
@@ -4503,7 +4509,7 @@ body {
   z-index: 0;
 }
 
-/* line 69, ../sass/modules/_global.scss */
+/* line 71, ../sass/modules/_global.scss */
 
 #content #slider .backgroundImages .bi__imgCont {
   position: absolute;
@@ -4512,7 +4518,7 @@ body {
   overflow: hidden;
 }
 
-/* line 75, ../sass/modules/_global.scss */
+/* line 77, ../sass/modules/_global.scss */
 
 #content #slider .backgroundImages .bi__imgCont .bi__imgCont-img {
   position: relative;
@@ -4522,7 +4528,7 @@ body {
   filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='12');
 }
 
-/* line 87, ../sass/modules/_global.scss */
+/* line 89, ../sass/modules/_global.scss */
 
 #content #slider .navigation {
   position: absolute;
@@ -4532,13 +4538,13 @@ body {
   z-index: 2;
 }
 
-/* line 94, ../sass/modules/_global.scss */
+/* line 96, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul {
   margin: 90px auto;
 }
 
-/* line 98, ../sass/modules/_global.scss */
+/* line 100, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li {
   float: left;
@@ -4548,25 +4554,25 @@ body {
   position: relative;
 }
 
-/* line 106, ../sass/modules/_global.scss */
+/* line 108, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:last-child {
   margin-right: 0;
 }
 
-/* line 108, ../sass/modules/_global.scss */
+/* line 110, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li:hover .li__info {
   opacity: 0.9 !important;
 }
 
-/* line 112, ../sass/modules/_global.scss */
+/* line 114, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li.active .li__hoverLine .l {
   width: 100%;
 }
 
-/* line 116, ../sass/modules/_global.scss */
+/* line 118, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li a {
   position: absolute;
@@ -4575,7 +4581,7 @@ body {
   z-index: 1;
 }
 
-/* line 124, ../sass/modules/_global.scss */
+/* line 126, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer {
@@ -4583,7 +4589,7 @@ body {
   opacity: 0.7;
 }
 
-/* line 131, ../sass/modules/_global.scss */
+/* line 133, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info h5,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer h5 {
@@ -4599,7 +4605,7 @@ body {
   padding: 4px 0px 5px 0px;
 }
 
-/* line 138, ../sass/modules/_global.scss */
+/* line 140, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info h4,
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer h4 {
@@ -4613,7 +4619,7 @@ body {
   text-transform: uppercase;
 }
 
-/* line 146, ../sass/modules/_global.scss */
+/* line 148, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info-mask {
   width: 0%;
@@ -4624,13 +4630,13 @@ body {
   overflow: hidden;
 }
 
-/* line 153, ../sass/modules/_global.scss */
+/* line 155, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__info-mask .mask__infoContainer {
   opacity: 1;
 }
 
-/* line 157, ../sass/modules/_global.scss */
+/* line 159, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__hoverLine {
   height: 1px;
@@ -4638,7 +4644,7 @@ body {
   margin-top: 8px;
 }
 
-/* line 163, ../sass/modules/_global.scss */
+/* line 165, ../sass/modules/_global.scss */
 
 #content #slider .navigation ul li .li__hoverLine .l {
   width: 0%;
