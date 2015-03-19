@@ -4,6 +4,18 @@
 
     /*---------------*/
 
+    if (!window.requestAnimationFrame) {
+	    window.requestAnimationFrame = (function() {
+	        return window.webkitRequestAnimationFrame ||
+	            window.mozRequestAnimationFrame ||
+	        	window.oRequestAnimationFrame ||
+	            window.msRequestAnimationFrame ||
+	            function(callback, element) {
+	                window.setTimeout(callback, 1000 / 60);
+	        	};
+	    })();
+	}
+
     // from http://stackoverflow.com/a/11381730/989439
 	function mobilecheck() {
 		var check = false;
@@ -137,20 +149,19 @@
 			_miImgEl.style.background = 'url('+ obj.src +') no-repeat center center';
 			_miImgEl.style.backgroundSize = 'cover';
 			_miImgEl.style.zIndex = (this.imagesCount - (obj.index + 1));
-			_biContImgEl.innerHTML = '<div class="bi__imgCont-img bi-'+ (obj.index + 1) +'" />';
-			_biContImgEl.style.zIndex = (this.imagesCount - (obj.index + 1));
+			_biContImgEl.innerHTML = '<div class="bi__imgCont-img bi-'+ obj.index +'" />';
 
 			this.mainImages.appendChild(_miImgEl);
+			this.backgroundImages.appendChild(_biContImgEl);
 
-			/*------------------------------------------*/
-			/*this.backgroundImages.appendChild(_biContImgEl);
-
-			var bi = this.backgroundImages.querySelector('.bi__imgCont .bi-' + (obj.index + 1));
-			bi.style.background = 'url('+ obj.src +') no-repeat center top';
-			bi.style.backgroundSize = 'cover';*/
+			var bgImageSrc = obj.src.split('.jpg')[0];
+			var bi = this.backgroundImages.querySelector('.bi__imgCont .bi-' + obj.index);
+			
+			bi.style.background = 'url('+ bgImageSrc +'-blur.jpg) no-repeat center top';
+			bi.style.backgroundSize = 'cover';
+			this.backgroundImages.style.display = "none";
 
 			//classie(this.Slider.querySelectorAll('.mi__img')[this.current], 'active-slide');
-			/*------------------------------------------*/
 
 		},
 
@@ -193,6 +204,7 @@
 
 			TweenMax.set(this.navigation, { opacity: 0, y: 25 });
 
+			// Front images
 			this.sld.forEach(function (el, i) {
 				classie.addClass(el, 'sld-' + i);
 				if( i===0 ) {
@@ -204,6 +216,24 @@
 					TweenMax.set(el, { scale: self.minScale, y: -window.innerHeight });
 				}
 			});	
+
+			// Blur images (background)
+			this.bgSld.forEach(function (el, i) {
+				
+				classie.addClass(el, 'bg-' + i);
+				TweenMax.set(el.querySelector('.bi__imgCont-img'), { scale: 1.35, y: 80 });
+				el.style.zIndex = 0;
+
+				if( i === self.current ) {
+					TweenMax.set(el.querySelector('.bi__imgCont-img'), { scale: 1.5, y: 0 });
+					el.style.zIndex = (self.current + 2);
+				}
+
+				if( i === (self.current + 1)) {
+					el.style.zIndex = (self.current + 1);
+				}
+
+			});
 
 			/*classie.addClass(self.sld[self.current], 'active-slide');
 			classie.addClass(self.navItens[self.current], 'active');*/
@@ -220,6 +250,7 @@
 				paused: true,
 				onComplete: function () {
 					self._startSlider();
+					self.backgroundImages.style.display = "block";
 				}
 			});
 
@@ -246,6 +277,8 @@
 			var self = this;
 			var currSlide = this.sld[this.current];
 			var currNavItem = this.navItens[this.current];
+			var currBgSlide = this.bgSld[this.current];
+			var currBgSldImage = currBgSlide.querySelector('.bi__imgCont-img');
 
 			console.log('Começa contagem do slide ' + this.current + '.');
 
@@ -277,6 +310,8 @@
 				classie.removeClass(currSlide, 'active-slide');
 				classie.removeClass(currNavItem, 'active');
 
+				TweenMax.set(currBgSlide, { top: 0, bottom: 'inherit' });
+
 				// Reset navigation item
 				currNavItem.querySelector('.li__info').style.opacity = 0.7;
 				TweenMax.to(currNavItem.querySelector('.li__info-mask'), 0.5, {
@@ -291,10 +326,22 @@
 					onComplete: function () {
 						
 						console.log('Transição de slides terminado.');
+						TweenMax.killTweensOf(currSlide, currBgSlide);
 
-						// Moving up the current image again
-						TweenMax.killTweensOf(currSlide);
+						// Moving up the last image
 						TweenMax.set(currSlide, { scale: self.minScale, y: -window.innerHeight });
+
+						// Reseting last background image
+						TweenMax.set(currBgSlide, { height: '100%', top: 'inherit', bottom: 0 });
+						TweenMax.set(currBgSldImage, { scale: 1.35, y: 80 });
+						currBgSlide.style.zIndex = 0;
+
+						// New z-index value for next background images
+						self.bgSld[nextIndex].style.zIndex = 2;
+						
+						if((nextIndex+1) >= self.imagesCount) { self.bgSld[0].style.zIndex = 1; }
+						else { self.bgSld[nextIndex+1].style.zIndex = 1; }
+						//console.log(self.bgSld[nextIndex+1], ' : ', nextIndex+1);
 
 						// Reinitialize the slider
 						self.current = nextIndex;
@@ -303,10 +350,17 @@
 					}
 				});
 
+				// Current elements animations
 				tm.to(currSlide, 1.5, { scale: 0.8 });
+				tm.to(currBgSldImage, 1.2, { scale: 1.35 }, 0.15);
 				tm.to(currSlide, 1.2, { y: window.innerHeight }, 0.8);
+				tm.to(currBgSlide, 1.2, { height: '0%' }, 0.8);
+
+				// Next elements animations
 				tm.to(self.sld[nextIndex], 1.2, { y: 0 }, 0.8);
-				tm.to(self.sld[nextIndex], 1.5, { scale: 1 }, 1.4);
+				tm.to(self.sld[nextIndex], 1.5, { scale: 1 }, 1.8);
+				tm.to(self.bgSld[nextIndex].querySelector('.bi__imgCont-img'), 1.5, { y: 0 }, 1);
+				tm.to(self.bgSld[nextIndex].querySelector('.bi__imgCont-img'), 1.5, { scale: 1.5 }, 1.8);
 
 			}
 

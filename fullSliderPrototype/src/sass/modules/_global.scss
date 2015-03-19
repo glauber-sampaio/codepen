@@ -71,16 +71,12 @@ body {
 			.bi__imgCont {
 				@extend %fullSize;
 				position: absolute;
-				top: 0; left: 0;
+				bottom: 0; left: 0;
 				overflow: hidden;
 
 				.bi__imgCont-img {
 					@extend %fullSize;
 					position: relative;
-					-webkit-filter: blur(12px); 
-					filter: blur(12px);
-					filter: url(../blur.svg#blur);
-					filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='12');
 				}
 			}
 		}
