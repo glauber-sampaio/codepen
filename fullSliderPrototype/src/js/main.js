@@ -53,6 +53,7 @@
 
 		_init: function() {
 
+			this.isFF = !!navigator.userAgent.match(/firefox/i);
 			// Check if it's mobile or click
 			this.evttype = mobilecheck() ? 'touchstart' : 'click';
 			// Slider global element
@@ -195,6 +196,9 @@
 			// Setting width for mask according to 'li' size.
 			// This the the final computed style of li
 			mask.style.width = css(_li, 'width') + "px";
+			if(this.isFF) {
+				mask.style.width = (css(_li, 'width')+5) + "px";
+			}
 
 		},
 
@@ -266,9 +270,9 @@
 		
 			Lógica:
 			1) Primeiro slide aparece.
-			2) Começou contagem.
+			2) Apareceu? Começou contagem.
 			3) Acabou contagem, transiciona.
-			4) Acabou transição, inicia nova contagem.
+			4) Acabou transição? Aparece novo slide.
 
 		*/
 
