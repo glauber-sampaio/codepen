@@ -1,0 +1,141 @@
+* {
+	font-family: 'Fjalla One';
+	font-weight: 400;
+	@include unselectable;
+}
+
+#content {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	
+	/* Slider frame */
+	.slider-frame {
+		background: darken(white, 10%);
+		top: 15vh;
+		left: 15vh;
+		right: 15vh;
+		bottom: 15vh;
+		position: fixed;
+	}
+
+	/* Slider Captions */
+	.slider-captions {
+		height: 100%;
+		position: relative;
+		z-index: 100;
+
+		.caption-item {
+			min-width: 300px;
+			display: inline-block;
+			position: absolute;
+			cursor: pointer;
+			display: none;
+
+			* { @extend %expo; }
+
+			&.active-caption {
+				display: block;
+
+				.text-group .text-wrapper {
+					width: 100%;
+				}
+
+			}
+
+			&:hover {
+				.text-group .text-wrapper .black {
+					color: darken(white, 80%);
+				}
+			}
+
+			.text-group {
+				width: 100%;
+				position: absolute;
+
+				&.black { z-index: 3; }
+				&.gray { z-index: 2; }
+				&.outline { z-index: 1; }
+
+				.text-wrapper {
+					width: 0%; // 100%
+					overflow: hidden;
+				}
+				
+				p {
+					min-width: 300px;
+					display: table;
+
+					&.black {
+						color: black;
+					}
+
+					&.gray {
+						color: darken(white, 10%);
+					}
+
+					&.outline {
+						color: transparent;
+						-webkit-text-stroke: darken(white, 20%) 1px;
+					}
+
+				}
+
+				.subtitle {
+					font-family: 'Playfair Display';
+					font-weight: 700;
+					font-size: 60px;
+					line-height: 70px;
+				}
+				.title {
+					font-size: 60px;
+					line-height: 54px;
+				}
+			}
+		}
+
+	}
+	
+
+	/* Slider control */
+	.slider-control {
+		@extend %widthauto;
+		position: absolute;
+		top: 50%; right: 6.5vh;
+		z-index: 200;
+
+		* { @extend %expo; }
+		
+		.btn {
+			width: 24px;
+			height: 24px;
+			display: block;
+			position: relative;
+			cursor: pointer;
+
+			.line {
+				width: 100%;
+				height: 1px;
+				background: darken(white, 20%);
+				top: 50%; left: 0;
+				margin-top: -0.5px;
+
+				&:after {
+					content: "";
+					width: 0%;
+					height: 100%;
+					background: black;
+					display: block;
+					@extend %expo;
+				}
+			}
+
+			&:hover .line:after,
+			&.active .line:after {
+				width: 100%;
+			}
+
+		}
+	}
+
+}

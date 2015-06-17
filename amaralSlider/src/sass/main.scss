@@ -1,0 +1,12 @@
+@import "../components/foundation/scss/normalize.scss";
+@import "../components/foundation/scss/foundation/components/global";
+@import "../components/foundation/scss/foundation/components/grid";
+@import "../components/foundation/scss/foundation/components/visibility";
+
+
+@import "base/palette";
+@import "base/fonts";
+@import "base/mymixins";
+
+@import "modules/resets";
+@import "modules/global";
