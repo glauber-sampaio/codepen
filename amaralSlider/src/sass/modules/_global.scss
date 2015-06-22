@@ -4,6 +4,10 @@
 	@include unselectable;
 }
 
+body {
+	//overflow: hidden;
+}
+
 #content {
 	width: 100%;
 	height: 100vh;
@@ -11,12 +15,67 @@
 	
 	/* Slider frame */
 	.slider-frame {
-		background: darken(white, 10%);
-		top: 15vh;
-		left: 15vh;
-		right: 15vh;
-		bottom: 15vh;
-		position: fixed;
+		@extend %fullsize;
+		position: absolute;
+		overflow: hidden;
+
+		&--slides {
+			@extend %fullsize;
+			position: relative;
+			z-index: 1;
+			opacity: 0;
+
+			.slider {
+				top: 15vh;
+				left: 15vh;
+				right: 15vh;
+				bottom: 15vh;
+				position: absolute;
+				overflow: hidden;
+
+				&.active-slider {
+					z-index: 5;
+				}
+
+				&--image {
+					top: 0vh;
+					left: 0vh;
+					right: 0vh;
+					bottom: 0vh;
+					overflow: hidden;
+					position: absolute;
+
+					img {
+						
+					}
+				}
+
+				&--shadow {
+					width: 100%;
+					height: 100px;
+					background: url(../images/slider-shadow.png) repeat-x;
+					position: absolute;
+					top: 0; left: 0;
+					z-index: 2;
+					display: none;
+				}
+
+			}
+		}
+
+		&--background {
+			background: darken(white, 10%);
+			top: 15vh;
+			left: 15vh;
+			right: 15vh;
+			bottom: 15vh;
+			position: fixed;
+			z-index: 0;
+
+			&.black { background: darken(white, 80%); }
+
+		}
+
 	}
 
 	/* Slider Captions */
@@ -30,17 +89,12 @@
 			display: inline-block;
 			position: absolute;
 			cursor: pointer;
-			display: none;
+			left: 8vh;
 
-			* { @extend %expo; }
+			// * { @extend %expo; }
 
-			&.active-caption {
-				display: block;
-
-				.text-group .text-wrapper {
-					width: 100%;
-				}
-
+			&.hiden-caption {
+				display: none;
 			}
 
 			&:hover {
@@ -60,11 +114,15 @@
 				.text-wrapper {
 					width: 0%; // 100%
 					overflow: hidden;
+
+					&.show { width: 100% }
+
 				}
 				
 				p {
 					min-width: 300px;
 					display: table;
+					@extend %expo;
 
 					&.black {
 						color: black;
@@ -76,7 +134,7 @@
 
 					&.outline {
 						color: transparent;
-						-webkit-text-stroke: darken(white, 20%) 1px;
+						-webkit-text-stroke: darken(white, 80%) 1px;
 					}
 
 				}
@@ -103,6 +161,7 @@
 		position: absolute;
 		top: 50%; right: 6.5vh;
 		z-index: 200;
+		opacity: 0;
 
 		* { @extend %expo; }
 		
