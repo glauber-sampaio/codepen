@@ -32,7 +32,7 @@ Slider.prototype = {
 		setTimeout(function () {
 
 			self.activeCaptionAnimationIn();
-			self.activeSliderAnimationIn();
+			self.activeSlideAnimationIn();
 			self.updateActiveNav();
 
 		}, 1000);
@@ -116,7 +116,9 @@ Slider.prototype = {
 
 				var image = slider.querySelector('.slider--image');
 
-				image.style.transform = "rotate3d(0, 0, 1, -10deg) translate3d(0, " + (window.innerHeight * 2) + "px, 0)";
+				TweenMax.set(image,{
+					transform: 'rotate3d(0, 0, 1, -10deg) translate3d(0, '+ (window.innerHeight * 2) +'px, 0)'
+				});
 
 				if(i == 0) {
 					slider.classList.add('active-slider');
@@ -125,6 +127,8 @@ Slider.prototype = {
 					};
 				}
 
+				slider.classList.add('js-slide-' + i);
+
 			}
 		);
 
@@ -132,7 +136,7 @@ Slider.prototype = {
 
 	},
 
-	activeSliderAnimationIn: function () {
+	activeSlideAnimationIn: function () {
 
 		var activeSlider = this.sliderFrame.querySelector('.active-slider');
 
@@ -143,13 +147,11 @@ Slider.prototype = {
 
 	},
 
-	currSliderAnimationOut: function (index) {
+	currSlideAnimationOut: function (index) {
 
-		var currSlider = Array.prototype.slice.call(this.sliderFrame.querySelector('.slider-frame--slides').children)[index],
+		var currSlider = document.querySelector('.js-slide-' + index),
 			_image = currSlider.querySelector('.slider--image'),
 			tm = new TimelineMax({ onComplete: resetSliderPosition });
-
-		//currSlider.style.overflow = 'hidden';
 
 		TweenMax.killTweensOf(_image);
 
@@ -158,10 +160,39 @@ Slider.prototype = {
 
 		function resetSliderPosition() {
 
-			// _image.style.transform = "rotate3d(0, 0, 1, -10deg) translate3d(0, " + (window.innerHeight * 2) + "px, 0)";
-			// currSlider.style.overflow = 'visible';
+			TweenMax.set(_image,{
+				transform: 'rotate3d(0, 0, 1, 10deg) translate3d(0, '+ (-window.innerHeight * 2) +'px, 0)'
+			});
 
 		}
+
+	},
+
+	activeSlideAnimationOut: function (index) {
+
+		var activeSlide = document.querySelector('.js-slide-' + index),
+			_image = activeSlide.querySelector('.slider--image'),
+			tm = new TimelineMax({ onComplete: resetSlidePosition });
+
+		tm.to(_image, 0.8, { scale: 0.8 });
+		tm.to(_image, 1, { y: window.innerHeight });
+
+		function resetSlidePosition() {
+			TweenMax.set(_image, {
+				transform: 'rotate3d(0, 0, 1, -10deg) translate3d(0, '+ (window.innerHeight * 2) +'px, 0)'
+			});
+		}
+
+	},
+
+	prevSlideAnimationIn: function (index) {
+
+		var prevSlide = document.querySelector('.js-slide-' + (index - 1) );
+
+		TweenMax.to(prevSlide.querySelector('.slider--image'), 1, {
+			transform: 'rotate3d(0, 0, 1, 0deg) translate3d(0, 0, 0)',
+			delay: 0.4
+		});
 
 	},
 
@@ -170,8 +201,6 @@ Slider.prototype = {
 		var activeCaption = document.querySelector('.slider-captions .active-caption'),
 			textGroupBlack = activeCaption.querySelector('.text-group.black'),
 			textGroupOutline = activeCaption.querySelector('.text-group.outline');
-
-		console.log(activeCaption);
 
 		if(classie.has(activeCaption, 'hiden-caption')) {
 			activeCaption.classList.remove('hiden-caption');
@@ -183,6 +212,8 @@ Slider.prototype = {
 		function hideGroupOutline() {
 			TweenMax.to(textGroupOutline, 1, { opacity: 0 });
 		}
+
+		this.activeElements.caption = activeCaption;
 
 	},
 
@@ -252,13 +283,9 @@ Slider.prototype = {
 			_sliderFrameChildren = Array.prototype.slice.call(this.sliderFrame.querySelector('.slider-frame--slides').children),
 			
 			activeSld = this.activeElements.slide.el,
-			currSldIndex = this.activeElements.slide.index,
+			activeSldIndex = this.activeElements.slide.index,
 			nextSld = activeSld.nextElementSibling,
-			//nextCaption = this.activeElements.caption.nextElementSibling;
-			nextCaption = document.querySelector('.js-cap-' + (currSldIndex + 1));
-
-		console.log('CURR SLD INDEX', currSldIndex);
-		console.log(nextCaption);
+			nextCaption = document.querySelector('.js-cap-' + (activeSldIndex + 1));
 
 		if(!this.animating) {
 
@@ -276,13 +303,13 @@ Slider.prototype = {
 				index: _sliderFrameChildren.indexOf(document.getElementsByClassName('active-slider')[0])
 			}
 
-			this.currSliderAnimationOut(currSldIndex);
-			this.currCaptionAnimationOut(currSldIndex);
+			this.currSlideAnimationOut(activeSldIndex);
+			this.currCaptionAnimationOut(activeSldIndex);
 			
 			setTimeout(function () {
 
 				self.activeCaptionAnimationIn();
-				self.activeSliderAnimationIn();
+				self.activeSlideAnimationIn();
 				self.updateActiveNav();
 				self.animating = false;
 
@@ -294,7 +321,45 @@ Slider.prototype = {
 
 	prevSlide: function () {
 
-		console.log('prev');
+		var self = this,
+			_sliderFrameChildren = Array.prototype.slice.call(this.sliderFrame.querySelector('.slider-frame--slides').children),
+
+			activeSld = this.activeElements.slide.el,
+			activeSldIndex = this.activeElements.slide.index,
+			prevSld = activeSld.previousElementSibling,
+
+			prevCaptionIndex = (activeSldIndex >= 0) ? activeSldIndex - 1 : 0;
+			prevCaption = document.querySelector('.js-cap-' + prevCaptionIndex);
+
+		if(!this.animating) {
+
+			this.animating = true;
+
+			activeSld.querySelector('.slider--shadow').style.display = 'block';
+			activeSld.classList.remove('active-slider');
+			prevSld.classList.add('active-slider');
+
+			this.activeElements.caption.classList.remove('active-caption');
+			prevCaption.classList.add('active-caption');
+
+			this.activeElements.slide = {
+				el: prevSld,
+				index: _sliderFrameChildren.indexOf(document.getElementsByClassName('active-slider')[0])
+			}
+
+			this.activeSlideAnimationOut(activeSldIndex);
+			this.currCaptionAnimationOut(activeSldIndex);
+
+			setTimeout(function () {
+
+				self.activeCaptionAnimationIn();
+				self.prevSlideAnimationIn(activeSldIndex);
+				self.updateActiveNav();
+				self.animating = false;
+
+			}, 400);
+
+		}
 
 	}
 
