@@ -25,14 +25,14 @@ Slider.prototype = {
 		this.activeElements = {};
 
 		this.drawCaptions();
-		this.drawControl();
+		this.controlButtons();
 		this.slidersInitPosition();
 		this.scrolling();
 
 		setTimeout(function () {
 
 			self.activeCaptionAnimationIn();
-			self.activeSlideAnimationIn();
+			self.next_SldAnimationIn();
 			self.updateActiveNav();
 
 		}, 1000);
@@ -88,7 +88,7 @@ Slider.prototype = {
 
 	},
 
-	drawControl: function () {
+	controlButtons: function () {
 
 		var slidesLength = this.sliderFrame.querySelectorAll('.slider').length;
 		var btnEl = document.createElement('div');
@@ -99,9 +99,18 @@ Slider.prototype = {
 		for( var i = 0; i < slidesLength; i++ ) {
 
 			var _newBtn = btnEl.cloneNode(true);
+			_newBtn.classList.add('js-btn-' + i);
 			this.sliderControl.appendChild(_newBtn);
 
 		}
+
+		Array.prototype.slice.call(document.querySelectorAll('.slider-control .btn')).forEach(
+			function (btn, i) {
+				btn.addEventListener('click', function () {
+					console.log('GOTO SLD', i);
+				});
+			}
+		)
 
 		this.sliderControl.style.opacity = 1;
 
@@ -136,7 +145,7 @@ Slider.prototype = {
 
 	},
 
-	activeSlideAnimationIn: function () {
+	next_SldAnimationIn: function () {
 
 		var activeSlider = this.sliderFrame.querySelector('.active-slider');
 
@@ -147,7 +156,7 @@ Slider.prototype = {
 
 	},
 
-	currSlideAnimationOut: function (index) {
+	next_sldAnimationOut: function (index) {
 
 		var currSlider = document.querySelector('.js-slide-' + index),
 			_image = currSlider.querySelector('.slider--image'),
@@ -168,7 +177,7 @@ Slider.prototype = {
 
 	},
 
-	activeSlideAnimationOut: function (index) {
+	prev_sldAnimationOut: function (index) {
 
 		var activeSlide = document.querySelector('.js-slide-' + index),
 			_image = activeSlide.querySelector('.slider--image'),
@@ -185,7 +194,7 @@ Slider.prototype = {
 
 	},
 
-	prevSlideAnimationIn: function (index) {
+	prev_sldAnimationIn: function (index) {
 
 		var prevSlide = document.querySelector('.js-slide-' + (index - 1) );
 
@@ -303,13 +312,13 @@ Slider.prototype = {
 				index: _sliderFrameChildren.indexOf(document.getElementsByClassName('active-slider')[0])
 			}
 
-			this.currSlideAnimationOut(activeSldIndex);
+			this.next_sldAnimationOut(activeSldIndex);
 			this.currCaptionAnimationOut(activeSldIndex);
 			
 			setTimeout(function () {
 
 				self.activeCaptionAnimationIn();
-				self.activeSlideAnimationIn();
+				self.next_SldAnimationIn();
 				self.updateActiveNav();
 				self.animating = false;
 
@@ -347,13 +356,13 @@ Slider.prototype = {
 				index: _sliderFrameChildren.indexOf(document.getElementsByClassName('active-slider')[0])
 			}
 
-			this.activeSlideAnimationOut(activeSldIndex);
+			this.prev_sldAnimationOut(activeSldIndex);
 			this.currCaptionAnimationOut(activeSldIndex);
 
 			setTimeout(function () {
 
 				self.activeCaptionAnimationIn();
-				self.prevSlideAnimationIn(activeSldIndex);
+				self.prev_sldAnimationIn(activeSldIndex);
 				self.updateActiveNav();
 				self.animating = false;
 
