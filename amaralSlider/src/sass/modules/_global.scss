@@ -31,7 +31,7 @@ body {
 				right: 15vh;
 				bottom: 15vh;
 				position: absolute;
-				overflow: hidden;
+				//overflow: hidden;
 
 				&.active-slider {
 					z-index: 5;
@@ -58,22 +58,10 @@ body {
 					top: 0; left: 0;
 					z-index: 2;
 					display: none;
+					opacity: 0;
 				}
 
 			}
-		}
-
-		&--background {
-			background: darken(white, 10%);
-			top: 15vh;
-			left: 15vh;
-			right: 15vh;
-			bottom: 15vh;
-			position: fixed;
-			z-index: 0;
-
-			&.black { background: darken(white, 80%); }
-
 		}
 
 	}

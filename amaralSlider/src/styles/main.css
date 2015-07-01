@@ -4525,7 +4525,6 @@ body {
   right: 15vh;
   bottom: 15vh;
   position: absolute;
-  overflow: hidden;
 }
 
 /* line 36, ../sass/modules/_global.scss */
@@ -4556,27 +4555,10 @@ body {
   left: 0;
   z-index: 2;
   display: none;
+  opacity: 0;
 }
 
-/* line 66, ../sass/modules/_global.scss */
-
-#content .slider-frame--background {
-  background: #e6e6e6;
-  top: 15vh;
-  left: 15vh;
-  right: 15vh;
-  bottom: 15vh;
-  position: fixed;
-  z-index: 0;
-}
-
-/* line 75, ../sass/modules/_global.scss */
-
-#content .slider-frame--background.black {
-  background: #333333;
-}
-
-/* line 82, ../sass/modules/_global.scss */
+/* line 70, ../sass/modules/_global.scss */
 
 #content .slider-captions {
   height: 100%;
@@ -4584,7 +4566,7 @@ body {
   z-index: 100;
 }
 
-/* line 87, ../sass/modules/_global.scss */
+/* line 75, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item {
   min-width: 300px;
@@ -4594,83 +4576,83 @@ body {
   left: 8vh;
 }
 
-/* line 96, ../sass/modules/_global.scss */
+/* line 84, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item.hiden-caption {
   display: none;
 }
 
-/* line 101, ../sass/modules/_global.scss */
+/* line 89, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item:hover .text-group .text-wrapper .black {
   color: #333333;
 }
 
-/* line 106, ../sass/modules/_global.scss */
+/* line 94, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group {
   width: 100%;
   position: absolute;
 }
 
-/* line 110, ../sass/modules/_global.scss */
+/* line 98, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group.black {
   z-index: 3;
 }
 
-/* line 111, ../sass/modules/_global.scss */
+/* line 99, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group.gray {
   z-index: 2;
 }
 
-/* line 112, ../sass/modules/_global.scss */
+/* line 100, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group.outline {
   z-index: 1;
 }
 
-/* line 114, ../sass/modules/_global.scss */
+/* line 102, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group .text-wrapper {
   width: 0%;
   overflow: hidden;
 }
 
-/* line 118, ../sass/modules/_global.scss */
+/* line 106, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group .text-wrapper.show {
   width: 100%;
 }
 
-/* line 122, ../sass/modules/_global.scss */
+/* line 110, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group p {
   min-width: 300px;
   display: table;
 }
 
-/* line 127, ../sass/modules/_global.scss */
+/* line 115, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group p.black {
   color: black;
 }
 
-/* line 131, ../sass/modules/_global.scss */
+/* line 119, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group p.gray {
   color: #e6e6e6;
 }
 
-/* line 135, ../sass/modules/_global.scss */
+/* line 123, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group p.outline {
   color: transparent;
   -webkit-text-stroke: #333333 1px;
 }
 
-/* line 142, ../sass/modules/_global.scss */
+/* line 130, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group .subtitle {
   font-family: 'Playfair Display';
@@ -4679,14 +4661,14 @@ body {
   line-height: 70px;
 }
 
-/* line 148, ../sass/modules/_global.scss */
+/* line 136, ../sass/modules/_global.scss */
 
 #content .slider-captions .caption-item .text-group .title {
   font-size: 60px;
   line-height: 54px;
 }
 
-/* line 159, ../sass/modules/_global.scss */
+/* line 147, ../sass/modules/_global.scss */
 
 #content .slider-control {
   position: absolute;
@@ -4696,7 +4678,7 @@ body {
   opacity: 0;
 }
 
-/* line 168, ../sass/modules/_global.scss */
+/* line 156, ../sass/modules/_global.scss */
 
 #content .slider-control .btn {
   width: 24px;
@@ -4706,7 +4688,7 @@ body {
   cursor: pointer;
 }
 
-/* line 175, ../sass/modules/_global.scss */
+/* line 163, ../sass/modules/_global.scss */
 
 #content .slider-control .btn .line {
   width: 100%;
@@ -4717,7 +4699,7 @@ body {
   margin-top: -0.5px;
 }
 
-/* line 182, ../sass/modules/_global.scss */
+/* line 170, ../sass/modules/_global.scss */
 
 #content .slider-control .btn .line:after {
   content: "";
@@ -4727,7 +4709,7 @@ body {
   display: block;
 }
 
-/* line 192, ../sass/modules/_global.scss */
+/* line 180, ../sass/modules/_global.scss */
 
 #content .slider-control .btn:hover .line:after,
 #content .slider-control .btn.active .line:after {

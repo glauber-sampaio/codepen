@@ -16,8 +16,6 @@ Slider.prototype = {
 
 	init: function () {
 
-		console.log('slider');
-
 		var self = this;
 
 		this.Content = document.querySelector('#content');
@@ -50,6 +48,7 @@ Slider.prototype = {
 			function (el, i) {
 
 				// Cloning text group to create the outlined group
+				el.classList.add('js-cap-' + i);
 
 				var mainTextGroup = el.querySelector('.text-group');
 				var outlinedTxtGroup = mainTextGroup.cloneNode(true);
@@ -76,7 +75,7 @@ Slider.prototype = {
 
 				// first item
 
-				if(i === 0) {
+				if(classie.has(el, 'js-cap-0')) {
 					el.classList.add('active-caption');
 					self.activeElements.caption = el;
 					return;
@@ -135,8 +134,6 @@ Slider.prototype = {
 
 	activeSliderAnimationIn: function () {
 
-		console.log('active-slider-animation-in');
-
 		var activeSlider = this.sliderFrame.querySelector('.active-slider');
 
 		TweenMax.to(activeSlider.querySelector('.slider--image'), 1, {
@@ -147,8 +144,6 @@ Slider.prototype = {
 	},
 
 	currSliderAnimationOut: function (index) {
-
-		console.log("slider-animation-out", index);
 
 		var currSlider = Array.prototype.slice.call(this.sliderFrame.querySelector('.slider-frame--slides').children)[index],
 			_image = currSlider.querySelector('.slider--image'),
@@ -176,6 +171,8 @@ Slider.prototype = {
 			textGroupBlack = activeCaption.querySelector('.text-group.black'),
 			textGroupOutline = activeCaption.querySelector('.text-group.outline');
 
+		console.log(activeCaption);
+
 		if(classie.has(activeCaption, 'hiden-caption')) {
 			activeCaption.classList.remove('hiden-caption');
 		}
@@ -192,7 +189,7 @@ Slider.prototype = {
 	currCaptionAnimationOut: function (index) {
 
 		var self = this,
-			currCaption = Array.prototype.slice.call(this.sliderCaptions.children)[index],
+			currCaption = document.querySelector('.js-cap-' + index),
 			textGroupBlack = currCaption.querySelector('.text-group.black'),
 			textGroupOutline = currCaption.querySelector('.text-group.outline');
 
@@ -251,21 +248,21 @@ Slider.prototype = {
 
 	nextSlide: function () {
 
-		console.log('next');
-
 		var self = this,
 			_sliderFrameChildren = Array.prototype.slice.call(this.sliderFrame.querySelector('.slider-frame--slides').children),
 			
 			activeSld = this.activeElements.slide.el,
 			currSldIndex = this.activeElements.slide.index,
 			nextSld = activeSld.nextElementSibling,
-			nextCaption = this.activeElements.caption.nextElementSibling;
+			//nextCaption = this.activeElements.caption.nextElementSibling;
+			nextCaption = document.querySelector('.js-cap-' + (currSldIndex + 1));
+
+		console.log('CURR SLD INDEX', currSldIndex);
+		console.log(nextCaption);
 
 		if(!this.animating) {
 
 			this.animating = true;
-
-			this.sliderFrame.querySelector('.slider-frame--background').classList.add('black');
 
 			activeSld.querySelector('.slider--shadow').style.display = 'block';
 			activeSld.classList.remove('active-slider');
