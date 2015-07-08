@@ -298,6 +298,8 @@ Slider.prototype = {
 
 		if(!this.animating) {
 
+			console.log(this.animating);
+
 			this.animating = true;
 
 			activeSld.querySelector('.slider--shadow').style.display = 'block';
@@ -335,40 +337,48 @@ Slider.prototype = {
 
 			activeSld = this.activeElements.slide.el,
 			activeSldIndex = this.activeElements.slide.index,
-			prevSld = activeSld.previousElementSibling,
+			prevCaptionIndex = (activeSldIndex >= 0) ? activeSldIndex - 1 : 0,
+			prevSld, prevCaption;
 
-			prevCaptionIndex = (activeSldIndex >= 0) ? activeSldIndex - 1 : 0;
-			prevCaption = document.querySelector('.js-cap-' + prevCaptionIndex);
+		prevSld = document.querySelector('.js-slide-' + activeSldIndex);
+		prevCaption = document.querySelector('.js-cap-' + activeSldIndex);
 
+		
 		if(!this.animating) {
 
 			this.animating = true;
 
-			activeSld.querySelector('.slider--shadow').style.display = 'block';
-			activeSld.classList.remove('active-slider');
-			prevSld.classList.add('active-slider');
+			if(activeSldIndex > 0) {
 
-			this.activeElements.caption.classList.remove('active-caption');
-			prevCaption.classList.add('active-caption');
+				activeSld.querySelector('.slider--shadow').style.display = 'block';
+				activeSld.classList.remove('active-slider');
+				prevSld.classList.add('active-slider');
 
-			this.activeElements.slide = {
-				el: prevSld,
-				index: _sliderFrameChildren.indexOf(document.getElementsByClassName('active-slider')[0])
+				this.activeElements.caption.classList.remove('active-caption');
+				prevCaption.classList.add('active-caption');
+
+				this.activeElements.slide = {
+					el: prevSld,
+					index: _sliderFrameChildren.indexOf(document.getElementsByClassName('active-slider')[0])
+				}
+
+				this.prev_sldAnimationOut(activeSldIndex);
+				this.currCaptionAnimationOut(activeSldIndex);
+
+				setTimeout(function () {
+
+					self.activeCaptionAnimationIn();
+					self.prev_sldAnimationIn(activeSldIndex);
+					self.updateActiveNav();
+					self.animating = false;
+
+				}, 400);
+
 			}
 
-			this.prev_sldAnimationOut(activeSldIndex);
-			this.currCaptionAnimationOut(activeSldIndex);
-
-			setTimeout(function () {
-
-				self.activeCaptionAnimationIn();
-				self.prev_sldAnimationIn(activeSldIndex);
-				self.updateActiveNav();
-				self.animating = false;
-
-			}, 400);
 
 		}
+
 
 	}
 
